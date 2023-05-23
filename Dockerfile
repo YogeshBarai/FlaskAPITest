@@ -1,11 +1,20 @@
-FROM python:3.8-slim
+# Use an official Python runtime as the base image
+FROM python:3.9-slim
 
+# Set the working directory in the container
 WORKDIR /app
 
-# Install the required Python packages
-RUN pip install --no-cache-dir \
-    flask \
-    pymysql
+# Copy the requirements file to the working directory
+COPY requirements.txt .
 
-# Copy the Flask application code to the working directory
+# Install the Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application code to the working directory
 COPY . .
+
+# Expose the port on which the API will listen
+EXPOSE 5000
+
+# Define the command to run your application
+CMD ["python", "app.py"]
